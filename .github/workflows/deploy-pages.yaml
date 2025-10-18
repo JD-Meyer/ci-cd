@@ -5,12 +5,15 @@ name: Reusable - Deploy to GitHub Pages
 on:
   # Adding a workflow_call to make this workflow reusable
   workflow_call:
-    # No inputs because they are passed in the artifact created by the calling function.
+    environment-name:
+      description: 'Takes the name of the environment as input'
+      required: true
+      type: string
 
 jobs:
   # This job's only responsibility is to deploy.
   deploy:
-    name: Deploy to Pages
+    name: Deploy to Pages ${{ inputs.environment-name }}
     # 1. Define the runner
     runs-on: ubuntu-latest
       # 2. Permissions are required for the deploy action to work.
@@ -19,7 +22,7 @@ jobs:
       id-token: write
     # 3. The deployment environment
     environment:
-      name: github-pages
+      name: ${{ inputs.environment-name }}
       url: ${{ steps.deployment.outputs.page_url }}
     # 4. The steps to run
     steps:
