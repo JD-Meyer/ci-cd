@@ -27,7 +27,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # GitHub has a problem with repo names that have upper-case letters in them
+      # GitHub has a problem with repo names that have upper-case letters in them.
       - name: Set lowercase repo name   # GH Actions does not have a toLower() function, but it does have string manipulation
         id: vars
         run: echo "repo=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
