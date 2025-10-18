@@ -1,0 +1,43 @@
+# .github/workflows/deploy-pages.yaml
+# Deploy to GitHub Pages
+name: Reusable - Deploy to GitHub Pages
+
+on:
+  # Adding a workflow_call to make this workflow reusable
+  workflow_call:
+    # No inputs because they are passed in the artifact created by the calling function.
+
+jobs:
+  # Define a custom deployment step.
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    # Sets permissions on GITHUB_TOKEN
+    # to allow deployment to GH Pages
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      # It's best practice to use a more specific version of actions
+      # to avoid unexpected breaking changes.
+      - name: Checkout code
+        uses: actions/checkout@v4                   # 1. Get the code to run
+
+      # 2. Configure GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v5            # 2. Configure GH Pages
+
+      # 3. Upload an artifact to GH Pages
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Stick the artifact in the build directory
+          path: ${{ inputs.build_dir }}             # 3. Upload the artifact
+
+      # 4. Deploy the artifact
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4               # 4. Deploy!
