@@ -5,10 +5,11 @@ name: Reusable - Deploy to GitHub Pages
 on:
   # Adding a workflow_call to make this workflow reusable
   workflow_call:
-    environment-name:
-      description: 'Takes the name of the environment as input'
-      required: true
-      type: string
+    inputs:
+      environment-name:
+        description: 'Takes the name of the environment as input'
+        required: true
+        type: string
 
 jobs:
   # This job's only responsibility is to deploy.
