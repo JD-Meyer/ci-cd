@@ -10,16 +10,19 @@ on:
 jobs:
   # Define a custom deployment step.
   deploy:
+    name: Deploy to Pages
+    # 1. Define the runner
+    runs-on: ubuntu-latest
+    # 2. Define the job's permissions
+    permissions:
+      contents: read         # I know this is redundant. I'm learning.
+      pages: write
+      id-token: write
+    # 3. The deployment environment
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    # Sets permissions on GITHUB_TOKEN
-    # to allow deployment to GH Pages
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
+    # 4. The steps to run
     steps:
       # It's best practice to use a more specific version of actions
       # to avoid unexpected breaking changes.
