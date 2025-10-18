@@ -8,14 +8,13 @@ on:
     # No inputs because they are passed in the artifact created by the calling function.
 
 jobs:
-  # Define a custom deployment step.
+  # This job's only responsibility is to deploy.
   deploy:
     name: Deploy to Pages
     # 1. Define the runner
     runs-on: ubuntu-latest
-    # 2. Define the job's permissions
+      # 2. Permissions are required for the deploy action to work.
     permissions:
-      contents: read         # I know this is redundant. I'm learning.
       pages: write
       id-token: write
     # 3. The deployment environment
@@ -26,21 +25,7 @@ jobs:
     steps:
       # It's best practice to use a more specific version of actions
       # to avoid unexpected breaking changes.
-      - name: Checkout code
-        uses: actions/checkout@v4                   # 1. Get the code to run
-
-      # 2. Configure GitHub Pages
-      - name: Setup Pages
-        uses: actions/configure-pages@v5            # 2. Configure GH Pages
-
-      # 3. Upload an artifact to GH Pages
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Stick the artifact in the build directory
-          path: ${{ inputs.build_dir }}             # 3. Upload the artifact
-
-      # 4. Deploy the artifact
+      # Deploy the artifact
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4               # 4. Deploy!
