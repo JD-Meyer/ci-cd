@@ -1,4 +1,4 @@
-# .github/workflows/build_docker.yaml
+# .github/workflows/build-docker.yaml
 # reusable workflow to build docker images
 name: Reusable - Build and Push Docker Image
 
