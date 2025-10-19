@@ -33,5 +33,4 @@ jobs:
       - name: Upload artifact                       # Now upload an artifact to GH Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          # Stick the artifact in the build directory
-          path: './build'
+          path: './build'     # Stick the artifact in the build directory
